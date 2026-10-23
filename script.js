@@ -1,7 +1,7 @@
 /* ============ À COMPLÉTER PAR L'ASSOCIATION ============ */
 const CONFIG = {
   // Numéro WhatsApp en format international, chiffres seulement (ex. indicatif 235 + numéro). Laisser vide tant que non fourni.
-  whatsapp: ""
+  whatsapp: "23591427908"
 };
 
 // Ajoutez vos vrais éléments ici. Tant que les listes sont vides, un message "à venir" s'affiche.
