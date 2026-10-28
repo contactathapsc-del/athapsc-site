@@ -3,153 +3,494 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="ATHAPSC : hygiène, assainissement et promotion de la santé communautaire à Moïssala et ses environs, Tchad.">
-<meta name="theme-color" content="#0b4f8a">
-<title>ATHAPSC – Hygiène, assainissement et santé communautaire</title>
+<title>ATHAPSC – Hygiène, Assainissement et Santé Communautaire</title>
 <link rel="icon" type="image/jpeg" href="logo.jpg">
-<link rel="stylesheet" href="style.css">
+<style>
+/* =========================================
+   VARIABLES ET RESET
+   ========================================= */
+:root{
+  --blue:#0b4f8a; --blue-d:#083a66; --green:#2e8b57; --green-d:#226b42;
+  --ink:#12303f; --mist:#eef6f4; --white:#fff; --line:#d5e3e0;
+  --orange:#e67e22;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth; scroll-padding-top:70px;}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color:var(--ink); background:var(--white); line-height:1.65; font-size:1.05rem;
+}
+.wrap{max-width:1100px; margin:0 auto; padding:0 1.1rem;}
+a{color:var(--blue); text-decoration:none; transition:color 0.2s;}
+a:hover{color:var(--orange);}
+:focus-visible{outline:3px solid var(--green); outline-offset:2px;}
+img{max-width:100%; height:auto;}
+
+/* =========================================
+   HEADER / NAVBAR
+   ========================================= */
+.topbar{
+  position:sticky; top:0; z-index:100; background:var(--blue); 
+  display:flex; align-items:center; justify-content:space-between; 
+  flex-wrap:wrap; padding:.8rem 1.1rem; box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+.brand{
+  color:#fff; font-weight:800; font-size:1.2rem; letter-spacing:.04em; 
+  display:flex; align-items:center; gap:.6rem;
+}
+.brand img{border-radius:50%; background:#fff; width:40px; height:40px; object-fit:cover;}
+.menu-btn{
+  background:transparent; color:#fff; border:2px solid #fff; border-radius:8px; 
+  padding:.4rem .9rem; font:inherit; font-weight:600; cursor:pointer;
+}
+.nav{display:none; width:100%; flex-direction:column; gap:.2rem; padding-top:.6rem;}
+.nav.open{display:flex;}
+.nav a{color:#fff; padding:.65rem .4rem; border-radius:8px; font-weight:500;}
+.nav a:hover, .nav a.active{background:var(--blue-d); color:#fff;}
+.nav .nav-cta{background:var(--green); font-weight:700; text-align:center; margin-top:0.5rem;}
+.nav .nav-cta:hover{background:var(--green-d);}
+.tools{display:flex; gap:.8rem; align-items:center;}
+.lang-btn{
+  background:#fff; color:var(--blue); border:0; border-radius:8px; 
+  padding:.45rem .8rem; font:inherit; font-weight:700; cursor:pointer;
+}
+
+/* =========================================
+   HERO SECTION
+   ========================================= */
+.hero{
+  position:relative; background:linear-gradient(150deg,var(--blue) 0%,#0f6a86 55%,var(--green) 100%);
+  color:#fff; padding:4rem 0 6rem; overflow:hidden;
+}
+.hero h1{font-size:clamp(2rem,5vw,3rem); line-height:1.15; margin:0 0 1rem; max-width:20ch; font-weight:800;}
+.lead{font-size:1.15rem; max-width:45ch; margin:0 0 2rem; opacity:0.95;}
+.actions{display:flex; flex-wrap:wrap; gap:.8rem;}
+.badge{display:inline-block; margin-top:1.8rem; padding:.4rem 1rem; border:1px solid rgba(255,255,255,.5); border-radius:99px; font-size:.9rem; background:rgba(255,255,255,0.1);}
+.wave{position:absolute; left:0; bottom:-1px; width:100%; height:50px; display:block;}
+
+/* =========================================
+   BOUTONS
+   ========================================= */
+.btn{
+  display:inline-block; padding:.8rem 1.5rem; border-radius:10px; 
+  font:inherit; font-weight:700; text-decoration:none; border:2px solid transparent; 
+  cursor:pointer; transition:all 0.2s;
+}
+.btn-white{background:#fff; color:var(--blue);}
+.btn-white:hover{background:var(--mist); color:var(--blue); transform:translateY(-2px);}
+.btn-ghost{border-color:#fff; color:#fff;}
+.btn-ghost:hover{background:rgba(255,255,255,0.1); transform:translateY(-2px);}
+.btn-green{background:var(--green); color:#fff;}
+.btn-green:hover{background:var(--green-d); transform:translateY(-2px);}
+.btn-block{display:block; width:100%; text-align:center;}
+
+/* =========================================
+   SECTIONS GÉNÉRALES
+   ========================================= */
+.section{padding:3.5rem 0;}
+.alt{background:var(--mist);}
+h2{font-size:2rem; color:var(--blue); margin:0 0 1.5rem; position:relative; display:inline-block;}
+h2::after{content:''; position:absolute; bottom:-8px; left:0; width:50px; height:4px; background:var(--orange); border-radius:2px;}
+h3{margin:0 0 .6rem; font-size:1.25rem; color:var(--blue-d);}
+.grid{display:grid; gap:1.5rem; margin-top:1.5rem;}
+.grid.two{grid-template-columns:1fr;}
+@media(min-width:768px){ .grid.two{grid-template-columns:repeat(2,1fr);} }
+
+.card{
+  background:#fff; border:1px solid var(--line); border-radius:12px; 
+  padding:1.5rem; transition:transform 0.2s, box-shadow 0.2s;
+  display:flex; flex-direction:column;
+}
+.card:hover{transform:translateY(-4px); box-shadow:0 10px 20px rgba(0,0,0,0.05);}
+.card.blue{border-top:5px solid var(--blue);}
+.card.green{border-top:5px solid var(--green);}
+.card.orange{border-top:5px solid var(--orange);}
+.card p{margin:.4rem 0;}
+.card ul{margin-left:1.2rem; margin-top:0.5rem; font-size:0.95rem;}
+
+/* =========================================
+   FORMULAIRE D'ADHÉSION
+   ========================================= */
+.adhesion-container{background:#fff; padding:2rem; border-radius:12px; border:1px solid var(--line); box-shadow:0 5px 15px rgba(0,0,0,0.03);}
+.adhesion-form h3{color:var(--blue); border-bottom:2px solid var(--mist); padding-bottom:0.5rem; margin-top:2rem; margin-bottom:1rem;}
+.adhesion-form h3:first-child{margin-top:0;}
+.form-grid{display:grid; gap:1rem; grid-template-columns:1fr;}
+@media(min-width:600px){ .form-grid{grid-template-columns:1fr 1fr;} }
+.form-group{display:flex; flex-direction:column;}
+.form-group label{font-size:0.9rem; margin-bottom:0.4rem; font-weight:600; color:var(--blue-d);}
+.form-group input, .form-group select, .form-group textarea{
+  padding:0.8rem; border:1px solid #ccc; border-radius:8px; font-family:inherit; font-size:1rem;
+}
+.form-group input:focus, .form-group textarea:focus{border-color:var(--blue); outline:none; box-shadow:0 0 0 3px rgba(11,79,138,0.1);}
+.checkbox-group{display:flex; flex-direction:column; gap:0.6rem; margin-top:0.5rem;}
+.checkbox-group label{font-weight:normal; display:flex; align-items:flex-start; gap:0.6rem; cursor:pointer; font-size:0.95rem;}
+.checkbox-group input[type="checkbox"], .checkbox-group input[type="radio"]{width:auto; margin-top:0.2rem; transform:scale(1.2);}
+
+/* =========================================
+   CONTACT & FOOTER
+   ========================================= */
+.contact-grid{display:grid; grid-template-columns:1fr; gap:1.5rem;}
+@media(min-width:768px){ .contact-grid{grid-template-columns:1fr 1fr;} }
+.contact-item{display:flex; align-items:flex-start; gap:1rem; background:#fff; padding:1.5rem; border-radius:12px; border:1px solid var(--line);}
+.contact-icon{font-size:1.5rem; color:var(--orange); background:var(--mist); width:50px; height:50px; display:flex; align-items:center; justify-content:center; border-radius:50%; flex-shrink:0;}
+.contact-item h4{margin:0 0 0.2rem; color:var(--blue);}
+.contact-item p{margin:0; font-size:0.95rem;}
+
+.footer{background:var(--blue-d); color:#fff; text-align:center; padding:2rem 1.1rem; font-size:.9rem; margin-top:3rem;}
+.footer p{margin:0; opacity:0.9;}
+
+/* =========================================
+   MESSAGES DE SUCCÈS / ERREUR
+   ========================================= */
+#formMessage { display: none; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; text-align: center; font-weight: 600; }
+.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+/* =========================================
+   RTL (ARABE)
+   ========================================= */
+[dir="rtl"] body{font-family:"Noto Naskh Arabic","Segoe UI",Tahoma,system-ui,sans-serif; line-height:1.9;}
+[dir="rtl"] .hero h1{max-width:none;}
+[dir="rtl"] h2::after{left:auto; right:0;}
+[dir="rtl"] .card ul{margin-left:0; margin-right:1.2rem;}
+</style>
 </head>
 <body>
 
 <header class="topbar">
-  <a href="#accueil" class="brand"><img src="logo.jpg" alt="Logo ATHAPSC" width="44" height="44"><span>ATHAPSC</span></a>
+  <a href="#accueil" class="brand">
+    <img src="logo.jpg" alt="Logo ATHAPSC">
+    <span>ATHAPSC</span>
+  </a>
   <div class="tools">
     <button class="lang-btn" id="langBtn" type="button" lang="ar">العربية</button>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav" data-ar="القائمة">Menu</button>
   </div>
   <nav id="nav" class="nav">
     <a href="#apropos" data-ar="نبذة عنا">À propos</a>
-    <a href="#domaines" data-ar="المجالات">Domaines</a>
+    <a href="#domaines" data-ar="محاور التدخل">Plan Stratégique</a>
     <a href="#projets" data-ar="المشاريع">Projets</a>
-    <a href="#galerie" data-ar="معرض الصور">Galerie</a>
-    <a href="#actualites" data-ar="الأخبار">Actualités</a>
-    <a href="#partenaires" data-ar="الشركاء">Partenaires</a>
-    <a href="#contact" class="nav-cta" data-ar="تواصل عبر واتساب">Contact WhatsApp</a>
+    <a href="#adhesion" data-ar="العضوية">Adhésion</a>
+    <a href="#contact" class="nav-cta" data-ar="تواصل معنا">Contact</a>
   </nav>
 </header>
 
 <main>
-
+<!-- HERO -->
 <section id="accueil" class="hero">
   <div class="wrap">
     <h1 data-ar="مياه نظيفة، وعادات بسيطة، ومجتمع يتمتع بصحة جيدة.">Une eau propre, des gestes simples, une communauté en bonne santé.</h1>
-    <p class="lead" data-ar="الجمعية التشادية للنظافة والصرف الصحي وتعزيز الصحة المجتمعية، في مويسالا وضواحيها.">Association Tchadienne pour l’Hygiène, l’Assainissement et la Promotion de la Santé Communautaire, à Moïssala et dans ses environs.</p>
+    <p class="lead" data-ar="الجمعية التشادية للنظافة والصرف الصحي وتعزيز الصحة المجتمعية، في مويسالا وضواحيها.">Association Tchadienne pour l'Hygiène, l'Assainissement, la Promotion de la Santé Communautaire et la Protection de l'Environnement, à Moïssala et dans ses environs.</p>
     <div class="actions">
-      <a class="btn btn-white" href="#contact" data-ar="راسلونا عبر واتساب">Nous écrire sur WhatsApp</a>
-      <a class="btn btn-ghost" href="#domaines" data-ar="اطلعوا على مجالاتنا">Voir nos domaines</a>
+      <a class="btn btn-white" href="#adhesion" data-ar="انضم إلينا">Devenir membre</a>
+      <a class="btn btn-ghost" href="#domaines" data-ar="خطتنا الاستراتيجية">Notre plan 2028-2032</a>
     </div>
     <p class="badge" data-ar="جمعية قيد التسجيل الرسمي">Association en cours de formalisation</p>
   </div>
   <svg class="wave" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0,30 C200,70 400,0 600,30 C800,60 1000,0 1200,30 L1200,60 L0,60 Z" fill="#ffffff"/></svg>
 </section>
 
+<!-- À PROPOS -->
 <section id="apropos" class="section">
   <div class="wrap">
-    <h2 data-ar="نبذة عنا">À propos</h2>
-    <p data-ar="الجمعية التشادية للنظافة والصرف الصحي وتعزيز الصحة المجتمعية جمعية تشادية غير سياسية وغير دينية وغير ربحية، قيد التسجيل الرسمي. تهدف إلى تعزيز النظافة والصرف الصحي والوقاية من الأمراض مع سكان مويسالا وضواحيها. ستبدأ أنشطتها بعد الحصول على الترخيص الإداري اللازم.">L’ATHAPSC est une association tchadienne, apolitique, non confessionnelle et à but non lucratif, en cours de formalisation. Elle a pour but de promouvoir l’hygiène, l’assainissement et la prévention des maladies avec les habitants de Moïssala et de ses environs. Ses activités débuteront après l’obtention de l’autorisation administrative requise.</p>
+    <h2 data-ar="نبذة عنا">À propos de l'ATHAPSC</h2>
+    <p data-ar="الجمعية التشادية للنظافة والصرف الصحي وتعزيز الصحة المجتمعية جمعية تشادية غير سياسية وغير دينية وغير ربحية. تهدف إلى تعزيز النظافة والصرف الصحي والوقاية من الأمراض مع سكان مويسالا وضواحيها.">L'ATHAPSC est une organisation de la société civile tchadienne, apolitique, non confessionnelle et à but non lucratif, basée à Moïssala (province du Mandoul). Elle a pour but de promouvoir l'hygiène, l'assainissement, la prévention des maladies et la protection de l'environnement. Ses activités opérationnelles débuteront après l'obtention de l'autorisation administrative requise.</p>
+    
     <div class="grid two">
-      <article class="card"><h3 data-ar="مهمتنا">Notre mission</h3><p data-ar="تعزيز النظافة والصرف الصحي والصحة المجتمعية وحماية البيئة والتنمية المستدامة من خلال تدخلات تشاركية وشاملة تستند إلى احتياجات المجتمعات.">Promouvoir l’hygiène, l’assainissement, la santé communautaire, la protection de l’environnement et le développement durable, par des interventions participatives, inclusives et fondées sur les besoins des communautés.</p></article>
-      <article class="card"><h3 data-ar="رؤيتنا">Notre vision</h3><p data-ar="أن تصبح منظمة مرجعية في تشاد ووسط أفريقيا في مجالات النظافة والصرف الصحي والصحة المجتمعية والقدرة على مواجهة تغيّر المناخ والتنمية المستدامة.">Devenir une organisation de référence au Tchad et en Afrique centrale dans les domaines de l’hygiène, de l’assainissement, de la santé communautaire, de la résilience climatique et du développement durable.</p></article>
-      <article class="card"><h3 data-ar="فريقنا">Notre équipe</h3><p data-ar="الهيئات المنصوص عليها في النظام الأساسي: الجمعية العامة، ومجلس الإدارة (من 5 إلى 9 أعضاء)، والمكتب التنفيذي (عشرة مناصب)، ومراقبة الحسابات (مراقبان).">Organes prévus par les statuts : Assemblée Générale, Conseil d’Administration (5 à 9 membres), Bureau Exécutif de dix postes et Commissariat aux comptes (2 commissaires).</p>
-        <p class="todo" data-ar="أسماء المسؤولين: [يُستكمل بعد انعقاد الجمعية العامة التأسيسية]">Noms des responsables : [À COMPLÉTER après l’Assemblée Générale constitutive]</p></article>
-      <article class="card"><h3 data-ar="الوضع القانوني">Statut légal</h3>
-        <p data-ar="جمعية قيد التسجيل الرسمي.">Association en cours de formalisation.</p>
-        <p data-ar="المقر الاجتماعي: مويسالا، ولاية ماندول، تشاد.">Siège social : Moïssala, province du Mandoul, Tchad.</p>
-        <p class="todo" data-ar="العنوان الكامل للمقر: [يُستكمل]">Adresse complète du siège : [À COMPLÉTER]</p>
-        <p class="todo" data-ar="رقم التسجيل: [يُستكمل عند الحصول عليه]">N° d’enregistrement : [À COMPLÉTER quand il sera obtenu]</p>
-        <p class="todo" data-ar="تاريخ التأسيس: [يُستكمل]">Date de création : [À COMPLÉTER]</p>
+      <article class="card">
+        <h3 data-ar="رؤيتنا">Notre Vision</h3>
+        <p data-ar="أن تصبح منظمة مرجعية في تشاد ووسط أفريقيا في مجالات النظافة والصرف الصحي والصحة المجتمعية والقدرة على مواجهة تغيّر المناخ والتنمية المستدامة.">Devenir une organisation de référence au Tchad et en Afrique centrale pour l'hygiène, l'assainissement, la santé communautaire, la justice environnementale et le développement durable.</p>
       </article>
-      <article class="card"><h3 data-ar="قيمنا">Nos valeurs</h3><p data-ar="الشفافية والنزاهة، والمساءلة، والتضامن ومشاركة المجتمع، واحترام الكرامة الإنسانية، والمساواة بين النساء والرجال، والحياد السياسي والديني، وعدم التمييز والإدماج، وحماية البيئة، والمهنية والسرية.">Transparence et intégrité, redevabilité, solidarité et participation communautaire, respect de la dignité humaine, égalité entre les femmes et les hommes, neutralité politique et religieuse, non-discrimination et inclusion, protection de l’environnement, professionnalisme et confidentialité.</p></article>
-      <article class="card"><h3 data-ar="شعارنا">Notre devise</h3><p data-ar="« معًا من أجل مجتمعات سليمة وقادرة على الصمود ومستدامة »">« Ensemble pour des communautés saines, résilientes et durables »</p></article>
+      <article class="card">
+        <h3 data-ar="مهمتنا">Notre Mission</h3>
+        <p data-ar="تعزيز النظافة والصرف الصحي والصحة المجتمعية وحماية البيئة والتنمية المستدامة من خلال تدخلات تشاركية وشاملة تستند إلى احتياجات المجتمعات.">Garantir à toutes les populations tchadiennes l'accès à l'eau potable, à l'assainissement, à la santé communautaire et à un environnement sain, par des interventions innovantes, inclusives et durables.</p>
+      </article>
     </div>
-    <h3 class="maptitle" data-ar="منطقة التدخل">Zone d’intervention</h3>
-    <p data-ar="مويسالا وضواحيها، تشاد.">Moïssala et ses environs, Tchad.</p>
-    <div class="map">
-      <iframe title="Carte de Moïssala" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=17.62%2C8.20%2C17.92%2C8.48&amp;layer=mapnik&amp;marker=8.34%2C17.77"></iframe>
-    </div>
-    <p class="small"><a href="https://www.openstreetmap.org/?mlat=8.34&amp;mlon=17.77#map=11/8.34/17.77" target="_blank" rel="noopener" data-ar="فتح الخريطة الكبيرة">Ouvrir la grande carte</a></p>
   </div>
 </section>
 
+<!-- PLAN STRATÉGIQUE (6 AXES) -->
 <section id="domaines" class="section alt">
   <div class="wrap">
-    <h2 data-ar="مجالات التدخل">Domaines d’intervention</h2>
+    <h2 data-ar="خطتنا الاستراتيجية 2028-2032">Plan Stratégique 2028-2032</h2>
+    <p style="margin-bottom: 2rem;" data-ar="ستة محاور استراتيجية لتحسين ظروف الحياة بشكل مستدام.">Six axes stratégiques pour améliorer durablement les conditions de vie des populations.</p>
+    
     <div class="grid two">
-      <article class="card blue"><h3 data-ar="النظافة">Hygiène</h3><p data-ar="التوعية بغسل اليدين والنظافة الشخصية ونظافة الأغذية.">Sensibilisation au lavage des mains, à l’hygiène personnelle et à l’hygiène des aliments.</p></article>
-      <article class="card green"><h3 data-ar="الصرف الصحي">Assainissement</h3><p data-ar="إدارة النفايات واستخدام المراحيض ونظافة أماكن المعيشة ومصادر المياه.">Gestion des déchets, usage des latrines, propreté des lieux de vie et des points d’eau.</p></article>
-      <article class="card blue"><h3 data-ar="الوقاية من الأمراض">Prévention des maladies</h3><p data-ar="توعية الأسر بالأمراض المرتبطة بالمياه والنظافة والبيئة.">Information des familles sur les maladies liées à l’eau, à l’hygiène et à l’environnement.</p></article>
-      <article class="card green"><h3 data-ar="الصحة المجتمعية">Santé communautaire</h3><p data-ar="جلسات توعوية وتعبئة السكان حول صحة القرية والحي.">Causeries éducatives et mobilisation des habitants autour de la santé du village et du quartier.</p></article>
-      <article class="card blue"><h3 data-ar="البيئة والمناخ">Environnement et climat</h3><p data-ar="أيام النظافة وحماية البيئة والقدرة على مواجهة آثار تغيّر المناخ.">Journées de salubrité, protection de l’environnement et résilience aux effets du changement climatique.</p></article>
-      <article class="card green"><h3 data-ar="الإدماج والحماية">Inclusion et protection</h3><p data-ar="دعم الفئات الهشّة وتعزيز المساواة بين النساء والرجال.">Soutien aux personnes en situation de vulnérabilité et égalité entre les femmes et les hommes.</p></article>
+      <article class="card blue">
+        <h3 data-ar="المياه والنظافة والصرف الصحي">1. Eau, Hygiène et Assainissement (WASH)</h3>
+        <p data-ar="تحسين الوصول المستدام إلى خدمات المياه الصالحة للشرب والصرف الصحي والنظافة.">Améliorer l'accès durable aux services d'eau potable, d'assainissement et d'hygiène.</p>
+        <ul>
+          <li>200 000 personnes sensibilisées</li>
+          <li>60 points d'eau construits ou réhabilités</li>
+          <li>30 villages certifiés FDAL</li>
+        </ul>
+      </article>
+      <article class="card green">
+        <h3 data-ar="الصحة المجتمعية">2. Santé Communautaire</h3>
+        <p data-ar="تعزيز الوقاية من الأمراض وتعزيز الصحة.">Renforcer la prévention des maladies et la promotion de la santé.</p>
+        <ul>
+          <li>250 relais communautaires formés</li>
+          <li>25 000 femmes sensibilisées</li>
+          <li>60 campagnes sanitaires</li>
+        </ul>
+      </article>
+      <article class="card blue">
+        <h3 data-ar="البيئة والعمل المناخي">3. Environnement et Action Climatique</h3>
+        <p data-ar="تعزيز القدرة على التكيف مع المناخ واستعادة الموارد الطبيعية.">Renforcer la résilience climatique et restaurer les ressources naturelles.</p>
+        <ul>
+          <li>150 000 arbres plantés</li>
+          <li>750 hectares restaurés</li>
+          <li>100 écoles impliquées</li>
+        </ul>
+      </article>
+      <article class="card green">
+        <h3 data-ar="الإدماج الاجتماعي والتمكين">4. Inclusion Sociale et Autonomisation</h3>
+        <p data-ar="تعزيز الاستقلالية الاقتصادية والاجتماعية للنساء والشباب.">Favoriser l'autonomie économique et sociale des femmes et des jeunes.</p>
+        <ul>
+          <li>12 000 jeunes accompagnés</li>
+          <li>6 000 femmes appuyées</li>
+          <li>100 organisations renforcées</li>
+        </ul>
+      </article>
+      <article class="card blue">
+        <h3 data-ar="الحوكمة والمناصرة">5. Gouvernance et Plaidoyer</h3>
+        <p data-ar="تشجيع المشاركة المدنية والحوكمة المحلية.">Encourager la participation citoyenne et la gouvernance locale.</p>
+        <ul>
+          <li>500 leaders communautaires formés</li>
+          <li>25 actions de plaidoyer</li>
+        </ul>
+      </article>
+      <article class="card green">
+        <h3 data-ar="التعزيز المؤسسي">6. Renforcement Institutionnel</h3>
+        <p data-ar="جعل الجمعية منظمة ذات مصداقية ومهنية ومستدامة.">Faire de l'ATHAPSC une organisation crédible, professionnelle et durable.</p>
+        <ul>
+          <li>25 partenariats stratégiques</li>
+          <li>20 employés permanents</li>
+          <li>6 bureaux régionaux</li>
+        </ul>
+      </article>
     </div>
-    <h3 class="maptitle" data-ar="الأنشطة المقررة">Activités prévues</h3>
-    <p class="small" data-ar="رهنًا بالحصول على التراخيص اللازمة.">Sous réserve des autorisations requises.</p>
-    <ul class="list">
-      <li data-ar="حملات إعلامية وتوعوية وتعليمية">Campagnes d’information, de sensibilisation et d’éducation</li>
-      <li data-ar="مشاريع المياه والنظافة والصرف الصحي (WASH)">Projets WASH (eau, hygiène et assainissement)</li>
-      <li data-ar="أيام النظافة وحماية البيئة">Journées de salubrité et protection de l’environnement</li>
-      <li data-ar="تدريب الوسطاء المجتمعيين والمتطوعين والفاعلين المحليين">Formation de relais communautaires, volontaires et acteurs locaux</li>
-      <li data-ar="توزيع حقائب النظافة بحسب الاحتياجات والموارد">Distribution de kits d’hygiène, selon les besoins et les ressources</li>
-      <li data-ar="دراسات واستطلاعات وتقييمات مع احترام الأخلاقيات">Études, enquêtes et évaluations dans le respect de l’éthique</li>
-      <li data-ar="بناء الشراكات والمشاركة في الشبكات">Partenariats et participation à des réseaux</li>
-    </ul>
-    <p data-ar="المساهمة في أهداف التنمية المستدامة: 3 و5 و6 و11 و13 و17.">Contribution aux Objectifs de développement durable : ODD 3, 5, 6, 11, 13 et 17.</p>
   </div>
 </section>
 
+<!-- PROJETS -->
 <section id="projets" class="section">
   <div class="wrap">
-    <h2 data-ar="المشاريع">Projets</h2>
-    <div class="grid two" id="projectsList"></div>
-  </div>
-</section>
-
-<section id="galerie" class="section alt">
-  <div class="wrap">
-    <h2 data-ar="معرض الصور">Galerie</h2>
-    <div class="gallery" id="galleryList"></div>
-  </div>
-</section>
-
-<section id="actualites" class="section">
-  <div class="wrap">
-    <h2 data-ar="الأخبار">Actualités</h2>
-    <div class="grid two" id="newsList"></div>
-  </div>
-</section>
-
-<section id="partenaires" class="section alt">
-  <div class="wrap">
-    <h2 data-ar="الشركاء">Partenaires</h2>
-    <div class="grid two" id="partnersList"></div>
-  </div>
-</section>
-
-<section id="contact" class="section contact">
-  <div class="wrap">
-    <h2 data-ar="تواصل عبر واتساب">Contact WhatsApp</h2>
-    <p data-ar="تواصلوا معنا مباشرة عبر واتساب. يمكنكم كتابة رسالتكم أدناه.">Écrivez-nous directement sur WhatsApp. Vous pouvez préparer votre message ci-dessous.</p>
-    <div class="form">
-      <label for="nom" data-ar="اسمكم">Votre nom</label>
-      <input id="nom" type="text" autocomplete="name">
-      <label for="msg" data-ar="رسالتكم">Votre message</label>
-      <textarea id="msg" rows="4"></textarea>
-      <button class="btn btn-green" id="waSend" type="button" data-ar="أرسلوا عبر واتساب">Envoyer sur WhatsApp</button>
-      <p class="todo small" id="waWarn" hidden data-ar="رقم واتساب غير مُعدّ: راجعوا CONFIG في ملف script.js.">Numéro WhatsApp non configuré : voir CONFIG dans script.js.</p>
+    <h2 data-ar="مشاريعنا">Nos Projets en cours</h2>
+    <div class="grid two">
+      <article class="card orange">
+        <h3>Projet « Écoles Propres, Élèves en Santé »</h3>
+        <p><strong>Statut :</strong> En recherche de financement (PISCCA)</p>
+        <p>Sensibilisation à l'hygiène, création de clubs d'hygiène, installation de stations de lavage à pédale et gestion de l'hygiène menstruelle dans 5 écoles de Moïssala.</p>
+        <p><strong>Budget :</strong> 4 000 000 FCFA</p>
+      </article>
+      <article class="card orange">
+        <h3>Diagnostic Communautaire EHA</h3>
+        <p><strong>Statut :</strong> En préparation</p>
+        <p>Réalisation d'une enquête de terrain (ménages, écoles, centres de santé) pour établir un état des lieux participatif de l'eau, de l'hygiène et de l'assainissement à Moïssala.</p>
+      </article>
     </div>
-    <p class="meta" data-ar="منطقة التدخل: مويسالا وضواحيها، تشاد.">Zone d’intervention : Moïssala et environs, Tchad.</p>
-    <p class="meta"><span data-ar="البريد الإلكتروني:">Adresse e-mail :</span> <a href="mailto:contact.athapsc@gmail.com" dir="ltr">contact.athapsc@gmail.com</a></p>
-    <p class="meta"><span data-ar="الهاتف:">Téléphone :</span> <a href="tel:+23591427908" dir="ltr">+235 91 42 79 08</a> / <a href="tel:+23565395823" dir="ltr">+235 65 39 58 23</a></p>
-    <p class="meta"><span data-ar="صفحة فيسبوك:">Page Facebook :</span> <a href="https://www.facebook.com/search/top?q=Athapsc" target="_blank" rel="noopener" dir="ltr">Athapsc</a></p>
   </div>
 </section>
 
+<!-- FORMULAIRE D'ADHÉSION DYNAMIQUE -->
+<section id="adhesion" class="section alt">
+  <div class="wrap">
+    <h2 data-ar="طلب العضوية">Devenir Membre</h2>
+    <p data-ar="املأ هذا النموذج للانضمام إلينا. سيتم إرسال طلبك إلى الإدارة للموافقة عليه.">Remplissez ce formulaire pour rejoindre l'ATHAPSC. Votre demande sera étudiée par le Bureau Exécutif.</p>
+    
+    <div class="adhesion-container">
+      <div id="formMessage"></div>
+      
+      <form class="adhesion-form" id="adhesionForm">
+        <h3>1. Informations personnelles</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="nom">Nom et prénom(s) *</label>
+            <input type="text" id="nom" required placeholder="Votre nom complet">
+          </div>
+          <div class="form-group">
+            <label for="email">Adresse e-mail *</label>
+            <input type="email" id="email" required placeholder="votre@email.com">
+          </div>
+          <div class="form-group">
+            <label for="tel">Téléphone / WhatsApp *</label>
+            <input type="tel" id="tel" required placeholder="+235 ...">
+          </div>
+          <div class="form-group">
+            <label for="ville">Ville / Localité *</label>
+            <input type="text" id="ville" required placeholder="Ex: Moïssala">
+          </div>
+        </div>
+
+        <h3>2. Détails de l'adhésion</h3>
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label>Catégorie de membre *</label>
+          <div class="checkbox-group">
+            <label><input type="radio" name="categorie" value="fondateur" required> Membre fondateur</label>
+            <label><input type="radio" name="categorie" value="actif"> Membre actif</label>
+            <label><input type="radio" name="categorie" value="sympathisant"> Membre sympathisant</label>
+            <label><input type="radio" name="categorie" value="bienfaiteur"> Membre bienfaiteur</label>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label>Domaines d'intérêt (cochez ce qui vous intéresse)</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="domaines" value="WASH"> Eau, Hygiène et Assainissement</label>
+            <label><input type="checkbox" name="domaines" value="Sante"> Santé Communautaire</label>
+            <label><input type="checkbox" name="domaines" value="Environnement"> Environnement et Climat</label>
+            <label><input type="checkbox" name="domaines" value="Inclusion"> Inclusion et Autonomisation</label>
+            <label><input type="checkbox" name="domaines" value="Gouvernance"> Gouvernance et Plaidoyer</label>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label for="motivation">Motivation (facultatif)</label>
+          <textarea id="motivation" rows="3" placeholder="Pourquoi souhaitez-vous rejoindre l'association ?"></textarea>
+        </div>
+
+        <h3>3. Consentement et Engagement</h3>
+        <div class="checkbox-group" style="margin-bottom: 1.5rem;">
+          <label>
+            <input type="checkbox" id="consentData" required> 
+            <span style="font-size: 0.95rem;">J'accepte que mes données soient collectées et utilisées pour la gestion de mon adhésion, conformément aux statuts de l'association. *</span>
+          </label>
+          <label>
+            <input type="checkbox" id="consentRules" required> 
+            <span style="font-size: 0.95rem;">Je m'engage à respecter les statuts, le règlement intérieur et les principes éthiques de l'ATHAPSC. *</span>
+          </label>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn btn-green btn-block">Envoyer ma demande d'adhésion</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="wrap">
+    <h2 data-ar="اتصل بنا">Contactez-nous</h2>
+    <p data-ar="يمكنكم التواصل معنا مباشرة عبر واتساب أو البريد الإلكتروني.">Vous pouvez nous contacter directement par WhatsApp ou par e-mail.</p>
+    
+    <div class="contact-grid" style="margin-top: 2rem;">
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <h4>E-mail</h4>
+          <p><a href="mailto:contact.athapsc@gmail.com">contact.athapsc@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <h4>Téléphone / WhatsApp</h4>
+          <p><a href="tel:+23591427908">+235 91 42 79 08</a><br><a href="tel:+23565395823">+235 65 39 58 23</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
 <footer class="footer">
-  <p>© <span id="year"></span> <span data-ar="الجمعية التشادية للنظافة والصرف الصحي وتعزيز الصحة المجتمعية – ATHAPSC">ATHAPSC – Association Tchadienne pour l’Hygiène, l’Assainissement et la Promotion de la Santé Communautaire.</span></p>
+  <p>© <span id="year"></span> ATHAPSC – Association Tchadienne pour l'Hygiène, l'Assainissement, la Promotion de la Santé Communautaire et la Protection de l'Environnement.</p>
 </footer>
 
-<script src="script.js"></script>
+<!-- =========================================
+     SCRIPTS FIREBASE ET LOGIQUE DYNAMIQUE
+     ========================================= -->
+<script type="module">
+  // 1. IMPORTS FIREBASE (via CDN)
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+  // 2. VOTRE CONFIGURATION FIREBASE (Récupérée depuis votre capture d'écran)
+  const firebaseConfig = {
+    apiKey: "AIzaSyAOnjke9ttytVJyRNW8nWJkvnBSPVw2AjY",
+    authDomain: "athapsc-74302.firebaseapp.com",
+    projectId: "athapsc-74302",
+    storageBucket: "athapsc-74302.firebasestorage.app",
+    messagingSenderId: "887875788297",
+    appId: "1:887875788297:web:a9742ef1ce1c5ed3c822d8",
+    measurementId: "G-2L0JB59FS2"
+  };
+
+  // 3. INITIALISATION
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // 4. GESTION DU MENU MOBILE
+  const menuBtn = document.getElementById('menuBtn');
+  const nav = document.getElementById('nav');
+  menuBtn.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+
+  // 5. GESTION DU FORMULAIRE D'ADHÉSION DYNAMIQUE
+  const adhesionForm = document.getElementById('adhesionForm');
+  const formMessage = document.getElementById('formMessage');
+  const submitBtn = document.getElementById('submitBtn');
+
+  adhesionForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Afficher le chargement
+    submitBtn.textContent = "Envoi en cours...";
+    submitBtn.disabled = true;
+    formMessage.style.display = 'none';
+
+    // Récupérer les données du formulaire
+    const nom = document.getElementById('nom').value;
+    const email = document.getElementById('email').value;
+    const tel = document.getElementById('tel').value;
+    const ville = document.getElementById('ville').value;
+    const motivation = document.getElementById('motivation').value;
+    
+    // Récupérer la catégorie (radio)
+    const categorie = document.querySelector('input[name="categorie"]:checked').value;
+
+    // Récupérer les domaines (checkbox)
+    const domainesCheckboxes = document.querySelectorAll('input[name="domaines"]:checked');
+    const domaines = Array.from(domainesCheckboxes).map(cb => cb.value);
+
+    try {
+      // Enregistrer dans Firestore (collection "adhesions")
+      await addDoc(collection(db, "adhesions"), {
+        nom: nom,
+        email: email,
+        telephone: tel,
+        ville: ville,
+        categorie: categorie,
+        domaines: domaines,
+        motivation: motivation,
+        dateDemande: serverTimestamp(), // Date automatique du serveur
+        statut: "En attente" // Statut par défaut pour l'administration
+      });
+
+      // Succès
+      formMessage.className = 'success';
+      formMessage.textContent = "Merci ! Votre demande a bien été enregistrée. Le bureau exécutif vous contactera.";
+      formMessage.style.display = 'block';
+      adhesionForm.reset();
+
+    } catch (error) {
+      // Erreur
+      console.error("Erreur lors de l'enregistrement : ", error);
+      formMessage.className = 'error';
+      formMessage.textContent = "Une erreur est survenue. Veuillez réessayer ou nous contacter par email.";
+      formMessage.style.display = 'block';
+    } finally {
+      // Réinitialiser le bouton
+      submitBtn.textContent = "Envoyer ma demande d'adhésion";
+      submitBtn.disabled = false;
+    }
+  });
+
+  // 6. METTRE À JOUR L'ANNÉE
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
